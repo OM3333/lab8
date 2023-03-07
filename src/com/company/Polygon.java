@@ -1,12 +1,16 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Polygon {
     private Point[] arr;
+    private Style style;
 
-    public Polygon(int count) {
+    public Polygon(int count, Style style) {
         arr = new Point[count];
+        this.style = style;
     }
 
     public void setPoint(int index, Point point) {
@@ -21,8 +25,7 @@ public class Polygon {
         String pointsString = "";
         for(Point point : arr)
             pointsString += point.x + "," + point.y + " ";
-
-        return String.format(Locale.ENGLISH,"<polygon points=\"%s\" %s />", pointsString);
+        return String.format(Locale.ENGLISH,"<polygon points=\"%s\" style = \"%s\" />", pointsString, this.style.toSvg());
     }
 
 }
