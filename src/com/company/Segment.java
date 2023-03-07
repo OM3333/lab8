@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Locale;
 
-public class Segment {
+public class Segment extends Shape {
     private final Point p1;
     private final Point p2;
     public Segment (Point p1,Point p2)
@@ -24,7 +24,7 @@ public class Segment {
         return (float) Math.hypot(p1.x - p2.x, p1.y - p2.y);
     }
     // <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />
-    public String toSVG(){
+    public String toSvg(){
         return String.format(Locale.ENGLISH, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke:rgb(255,0,0);stroke-width:2\" />",p1.x,p1.y,p2.x,p2.y);
     }
 
