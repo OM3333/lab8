@@ -14,6 +14,7 @@ public class SvgScene {
         width = (int)Math.max(this.width, maxPoint.x);
     }
 
+
         public void save(String file){
             try {
 
