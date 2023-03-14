@@ -8,14 +8,10 @@ public class Main {
     public static final Point test = new Point(2,3);
 
     public static void main(String[] args) {
-
-        ArrayList<Shape> test = new ArrayList<>();
-        test.add(new Polygon(2, new Style(null, null, null)));
-        test.add(new Segment(new Point(1,2), new Point(2,3)));
-
-        String str = "";
-        for(Shape shape : test){
-            str += shape.toSvg();
-        }
+        Shape poly = new Polygon(new Vec2[]{new Vec2(120,60), new Vec2(270,280), new Vec2(240,320), new Vec2(110,80)});
+   
+        SvgScene scene=new SvgScene();
+        scene.add(poly);
+        scene.saveHtml("scene.html");
     }
 }

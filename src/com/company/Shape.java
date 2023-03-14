@@ -1,5 +1,5 @@
 package com.company;
 
-public abstract class Shape {
-    public abstract String toSvg();
+public interface Shape {
+    String toSvg();
 }

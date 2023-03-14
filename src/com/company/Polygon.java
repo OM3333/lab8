@@ -1,48 +1,19 @@
 package com.company;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class Polygon extends Shape {
-    private Point[] arr;
-    private Style style;
+public class Polygon implements Shape {
+    Vec2 points[];
 
-    public Polygon(int count, Style style) {
-        arr = new Point[count];
-        this.style = style;
-    }
-
-    public void setPoint(int index, Point point) {
-        arr[index] = point;
-    }
-
-    public void setPoints(Point[] points){
-        arr = points;
+    public Polygon(Vec2[] points) {
+        this.points = points;
     }
 
     public String toSvg() {
         String pointsString = "";
-        for(Point point : arr)
+        for(Vec2 point : points)
             pointsString += point.x + "," + point.y + " ";
-        return String.format(Locale.ENGLISH,"<polygon points=\"%s\" style = \"%s\" />", pointsString, this.style.toSvg());
+
+        return String.format(Locale.ENGLISH,"<polygon points=\"%s\" />", pointsString);
     }
-
-    public Point getMaxCords() {
-        Point maxPoint = new Point(0,0);
-
-        for(Point p : this.arr) {
-            if(p.x > maxPoint.x) {
-                maxPoint.x = p.x;
-            }
-            if(p.y > maxPoint.y) {
-                maxPoint.y = p.y;
-            }
-        }
-
-        return maxPoint;
-    }
-
 }
