@@ -64,21 +64,57 @@ public class Person implements Serializable {
 
     static List<TemporaryPerson> people = new ArrayList<>();
 
-    public static Person getPersonFromFile(String path) throws FileNotFoundException,AmbigiousPersonException {
-            File file = new File(path);
-            Scanner sc = new Scanner(file);
-            String nameAndLastName = sc.nextLine();
-            LocalDate birthdayDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            LocalDate deathDate = null;
-            if(sc.hasNextLine()){
-                deathDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    public static Person getPersonFromFile(String path) throws FileNotFoundException, AmbigiousPersonException, IncestException {
+        File file = new File(path);
+        Scanner sc = new Scanner(file);
+        String nameAndLastName = sc.nextLine();
+        LocalDate birthdayDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        LocalDate deathDate = null;
+        Person firstPerson = null, secondPerson = null;
+
+        if(sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (!"Rodzice:".equals(line)) {
+                deathDate = LocalDate.parse(line, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             }
-            for(var person : people){
-                if(person.name.compareTo(nameAndLastName)==0){
-                    throw new AmbigiousPersonException(person.name,path,person.path);
+            if(sc.hasNextLine()) {
+                sc.nextLine();
+            }
+            if (sc.hasNextLine()) {
+                String firstPersonName = sc.nextLine();
+                firstPerson = findPerson(firstPersonName);
+                if(sc.hasNextLine()) {
+                    String secondPersonName = sc.nextLine();
+                    if (secondPersonName != null) {
+                        secondPerson = findPerson(secondPersonName);
+                    }
                 }
             }
-            people.add(new TemporaryPerson(nameAndLastName,path));
-            return new Person(nameAndLastName, birthdayDate, deathDate);
+        }
+        for(var person : people){
+            if(person.person.name.compareTo(nameAndLastName)==0){
+                throw new AmbigiousPersonException(person.person.name,path,person.path);
+            }
+        }
+        Person person = new Person(nameAndLastName, birthdayDate, deathDate, firstPerson, secondPerson);
+        people.add(new TemporaryPerson(person, path));
+        return person;
+    }
+
+    private static Person findPerson(String name) {
+        for (TemporaryPerson person : people) {
+            if (person.person.name.equals(name)) {
+                return person.person;
+            }
+        }
+        return null;
+    }
+
+    public static List<Person> getPeople(List<String> paths) throws FileNotFoundException, AmbigiousPersonException, IncestException {
+        List<Person> people = new ArrayList<>();
+        for (String path : paths) {
+            people.add(getPersonFromFile(path));
+        }
+        return people;
     }
 }
