@@ -9,6 +9,7 @@ import java.util.List;
 public class Main {
     public static void save(String path) {
         try {
+            
             List<Person> people = new ArrayList<>();
             Person janusz = new Person("Janusz",
                     LocalDate.of(1975, 1, 1));
