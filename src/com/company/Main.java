@@ -80,8 +80,11 @@ public class Main {
         try {
             filePerson = Person.getPersonFromFile("test/test_same_osoby/Alicja Stefanek.txt");
             filePerson = Person.getPersonFromFile("test/test_same_osoby/Alicja Stefanek2.txt");
-        } catch (FileNotFoundException | AmbigiousPersonException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (AmbigiousPersonException e) {
+            System.out.println(e.conflictPath1);
+            System.out.println(e.conflictPath2);
         }
         System.out.println(filePerson.toString());
     }
