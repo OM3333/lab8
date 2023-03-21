@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Person implements Serializable {
     private String name;
@@ -64,7 +62,9 @@ public class Person implements Serializable {
         }
     }
 
-    public static Person getPersonFromFile(String path) throws FileNotFoundException {
+    static List<String> names = new ArrayList<>();
+
+    public static Person getPersonFromFile(String path) throws FileNotFoundException,AmbigiousPersonException {
             File file = new File(path);
             Scanner sc = new Scanner(file);
             String nameAndLastName = sc.nextLine();
@@ -73,6 +73,10 @@ public class Person implements Serializable {
             if(sc.hasNextLine()){
                 deathDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             }
+            if(names.contains(nameAndLastName)) {
+                throw new AmbigiousPersonException(nameAndLastName);
+            }
+            names.add(nameAndLastName);
             return new Person(nameAndLastName, birthdayDate, deathDate);
     }
 }
