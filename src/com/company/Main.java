@@ -3,13 +3,14 @@ package com.company;
 import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void save(String path) {
         try {
-            
             List<Person> people = new ArrayList<>();
             Person janusz = new Person("Janusz",
                     LocalDate.of(1975, 1, 1));
@@ -75,27 +76,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        //save("people.bin");
-
-        load("people.bin");
-        /*
+        Person filePerson = null;
         try {
-            Person mirek = new Person("Mirek",
-                    LocalDate.of(2130, 5, 7),
-                    LocalDate.of(1990, 8, 1));
-            System.out.println(mirek);
-        } catch (NegativeLifespanException e) {
+            filePerson = Person.getPersonFromFile("test/test_same_osoby/Elżbieta Głaz.txt");
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.err.println(e.lifespan);
-        } catch (DateTimeException e) {
-            System.err.println(e.getMessage());
-            System.out.println("DT EXC");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            System.out.println("FINALLY");
         }
-         */
-
+        System.out.println(filePerson.toString());
     }
 }
