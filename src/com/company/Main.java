@@ -7,4 +7,5 @@ public class Main {
      test1.addLast("2");
      System.out.println(test1.getFirst()+" "+ test1.getLast());
     }
+
 }
