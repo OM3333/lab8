@@ -47,4 +47,35 @@ public class CustomList <T> {
         }
         return first.value;
     }
+    public T removeFirst(){
+        if(first==null){
+            throw new NoSuchElementException();
+        }
+        T oldFirstElement =  getFirst();
+        if(first == last){
+            first = null;
+            last = null;
+        }else {
+            first = first.next;
+        }
+        return oldFirstElement;
+    }
+    public T removeLast(){
+        if(last == null){
+            throw new NoSuchElementException();
+        }
+        T oldLastElement = getLast();
+        if(first == last){
+            first = null;
+            last = null;
+        }else{
+            Node ourElement = first;
+            while (ourElement.next!=last){
+                ourElement = ourElement.next;
+            }
+            ourElement.next = null;
+            last = ourElement;
+        }
+        return oldLastElement;
+    }
 }
