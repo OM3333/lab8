@@ -1,8 +1,10 @@
 package com.company;
 
+import java.util.AbstractList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class CustomList <T> {
+public class CustomList <T> extends AbstractList<T> {
     private class Node{
         T value;
         Node next;
@@ -77,5 +79,60 @@ public class CustomList <T> {
             last = ourElement;
         }
         return oldLastElement;
+    }
+
+    @Override
+    public T get(int index) {
+        if (first != null && index < size()) {
+            Node ourElement = first;
+            for(int i=1; i<index; ++i){
+                ourElement = ourElement.next;
+            }
+            return ourElement.value;
+
+        }
+        else{
+            throw new NoSuchElementException();
+        }
+    }
+
+    @Override
+    public int size() {
+        if(first != null){
+            Node ourElement = first;
+            int counter = 1;
+            while (ourElement.next!=last){
+                ourElement = ourElement.next;
+                counter++;
+            }
+            return counter;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public boolean add(T t){
+        addLast(t);
+        return true;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node currentNode = first;
+
+            @Override
+            public boolean hasNext() {
+                return currentNode != null;
+            }
+
+            @Override
+            public T next() {
+                T value = currentNode.value;
+                currentNode = currentNode.next;
+                return value;
+            }
+        };
     }
 }
