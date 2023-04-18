@@ -1,38 +1,25 @@
+import database.DatabaseConnection;
 import pl.umcs.oop.lec7.auth.AccountManager;
-import pl.umcs.oop.lec7.shop.Account;
-import pl.umcs.oop.lec7.shop.Cart;
-import pl.umcs.oop.lec7.shop.Product;
+//import pl.umcs.oop.lec7.auth.Account;
+
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 public class Main {
-    public static Account login(AccountManager accountManager, String name, String password) {
-        if(accountManager.login("alice", "secret"))
-            return new Account("alice");
-        else
-            throw new RuntimeException("Wrong credentials");
-    }
 
     public static void main(String[] args) {
-        AccountManager manager = new AccountManager();
-        manager.register("alice", "secret");
-        Account alice = login(manager, "alice", "secret");
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection.connect();
 
-        //Cart<FoodProduct> cart = alice.createCart();
-        FoodCart cart = new FoodCart(alice);
+        AccountManager accountManager = new AccountManager(databaseConnection);
+        try {
+            var account = accountManager.getUser("test");
+            System.out.println(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        FoodProduct bread = new FoodProduct("bread",
-                new BigDecimal(5), 250);
-        FoodProduct butter = new FoodProduct("butter",
-                new BigDecimal(8), 700);
-
-        Product box = new Product("box",
-                new BigDecimal(8));
-
-        cart.add(bread);
-        cart.add(butter);
-        //cart.add(box);
-
-        System.out.println(cart.value());
+        databaseConnection.disconnect();
     }
 }
