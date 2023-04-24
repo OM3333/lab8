@@ -52,7 +52,11 @@ public abstract class Product {
         }
     }
 
-    protected int priceIndex(int year, int month) {
+
+
+    static int priceIndex(int year, int month) {
+        if(year<2010 || year>2022 || (year==2022 && month>3) || month<1 || month>12)
+            throw new IndexOutOfBoundsException();
         return (year-2010) * 12 + (month-1);
     }
 }
