@@ -5,7 +5,11 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class FoodProduct extends Product {
-    Map<String, Double[]> prices;
+    private Map<String, Double[]> prices;
+
+    public FoodProduct(){
+        super("");
+    }
 
     private FoodProduct(String name,  Map<String, Double[]> prices) {
         super(name);

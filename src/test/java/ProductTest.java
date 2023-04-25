@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.lang.reflect.Executable;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ProductTest {
@@ -43,5 +44,18 @@ public class ProductTest {
     @CsvFileSource(resources = "test.csv",numLinesToSkip = 1)
     void parameterizedCSV(int year, int month, int result){
         Assertions.assertEquals(Product.priceIndex(year, month),result);
+    }
+
+    @Test
+    void priceIndexMultiple(){
+        int expected = 0;
+        for(int year = 2001;year<2021;++year)
+        {
+            for(int month : IntStream.rangeClosed(1,12).toArray()){
+                if(year>=2010){
+                    Assertions.assertEquals(Product.priceIndex(year,month),expected++);
+                }
+            }
+        }
     }
 }
