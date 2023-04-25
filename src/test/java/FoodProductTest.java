@@ -21,8 +21,8 @@ public class FoodProductTest {
 
     @Test
     public  void mapCheck() throws NoSuchFieldException, IllegalAccessException {
-        //FoodProduct c = FoodProduct.fromCsv(Path.of("src/test/resources/buraki.csv"));
-        FoodProduct c = new FoodProduct();
+        FoodProduct c = FoodProduct.fromCsv(Path.of("src/test/resources/buraki.csv"));
+
 
         //nie działa ale i tak jest złą praktyką więc whatever xD
 
